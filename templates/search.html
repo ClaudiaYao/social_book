@@ -1,0 +1,107 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'assets/images/favicon.png' %}" rel="icon" type="image/png">
+    <title>Account Setting</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'assets/css/icons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/uikit.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/tailwind.css' %}">
+
+</head>
+
+<body>
+
+    <header>
+        <div class="header_inner">
+            <div class="left-side">
+                <!-- Logo -->
+                <div id="logo" class="">
+                    <a href="{% url 'index' %}">
+                        <b>
+                            <h1 style="text-transform: uppercase;">Social Book &nbsp;</h1>
+                        </b>
+                    </a>
+                </div>
+
+                <form action="{% url 'search' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="header_search">
+                        <input type="text" name="username" placeholder="Search for username..">
+                        <button type="submit" class="icon-search">🔍</button>
+                    </div>
+                </form>
+            </div>
+            <p>Welcome! 🍭🎈🎉 {{profile.user.username}}</p>
+            <div class="right-side lg:pr-4">
+
+                <!-- profile -->
+                <a href="#">
+                    <img src="{{user_profile.profileimg.url}}" class="header-avatar" alt="">
+                </a>
+                <div uk-drop="mode: click;offset:9" class="header_dropdown profile_dropdown border-t">
+                    <ul>
+                        <li><a href="{% url 'settings' %}"> Account setting </a> </li>
+                        <li><a href="{% url 'signout' %}"> Log Out</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+
+    <br>
+    <br>
+    <div class="container m-auto bg-white rounded-lg">
+        <div style="margin: 2em;">
+            <div style="text-align: center; font-size: 4ex;">
+                <h2>📌 User Search Result 🪄</h2>
+            </div>
+            <br>
+            {% for profile in searched_profiles %}
+            <div
+                style="display: grid; align-items: center; grid-template-columns: 3fr 5fr; column-gap: 30px; row-gap: 400px;">
+                <div>
+                    <img src="{{profile.profileimg.url}}" height="200" width="400">
+                    <h5 style="text-underline-position: below; align-content: center;">
+                        <a href="{% url 'profile' profile.id %}">✨ @{{profile.user.username}}</a>
+                    </h5>
+
+                </div>
+                <div style="display: inline-flex;">
+                    <p style="padding-right: 2em;">{{profile.bio}}
+                        <br><br>
+                        {{profile.location}}
+                    </p>
+                </div>
+            </div>
+            <br>
+            <hr>
+            <br>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+    <!-- Scripts
+    ================================================== -->
+    <script src="{% static 'assets/js/tippy.all.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'assets/js/uikit.js' %}"></script>
+    <script src="{% static 'assets/js/simplebar.js' %}"></script>
+    <script src="{% static 'assets/js/custom.js' %}"></script>
+
+
+    <script src="{% static '../../unpkg.com/ionicons%405.2.3/dist/ionicons.js' %}"></script>
+</body>
+
+</html>
